@@ -90,8 +90,10 @@ func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]int) (res T, e
 	}
 
 	totalShowed := 0
+	var totalExpect float64 = 0
 	for i := range units {
 		totalShowed += showed[units[i].Key]
+		totalExpect += units[i].Expect
 	}
 
 	if totalShowed == 0 {
@@ -103,10 +105,10 @@ func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]int) (res T, e
 	}
 
 	actuals := make([]int, len(units))
-	minActual := float64(showed[units[0].Key])/float64(totalShowed) - units[0].Expect
-	count := 1
+	minActual := float64(showed[units[0].Key])/float64(totalShowed)*totalExpect - units[0].Expect
+	count := 0
 	for k, v := range units {
-		actual := float64(showed[v.Key])/float64(totalShowed) - v.Expect
+		actual := float64(showed[v.Key])/float64(totalShowed)*totalExpect - v.Expect
 		if actual > minActual {
 			continue
 		} else if actual < minActual {

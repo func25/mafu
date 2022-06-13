@@ -7,70 +7,8 @@ import (
 	"github.com/func25/mafu"
 )
 
-func TestRandRates(t *testing.T) {
-	quantity := map[string]int{}
-	n := 1000
-	for i := 0; i < n; i++ {
-		res, err := mafu.RandRateUnits([]mafu.RateUnit[string]{
-			{
-				Key:  "a",
-				Rate: 0.1,
-			},
-			{
-				Key:  "ab",
-				Rate: 0.1,
-			},
-			{
-				Key:  "abc",
-				Rate: 0.1,
-			},
-			{
-				Key:  "abcd",
-				Rate: 0.1,
-			},
-			{
-				Key:  "abcde",
-				Rate: 0.6,
-			},
-		})
-		if err != nil {
-			t.Error(err)
-			return
-		}
-		quantity[res]++
-	}
-
-	fmt.Println(quantity)
-}
-
 type abc struct {
 	a, b, c mafu.UIntBits
-}
-
-func TestAbc(t *testing.T) {
-	// var w io.Writer
-	// w = os.Stdout
-	// w = new(bytes.Buffer)
-	// w = nil
-	fmt.Println(string([]byte("")))
-}
-
-func TestInterface(t *testing.T) {
-	var x interface{}
-	var y *int = nil
-	x = y
-
-	if x != nil {
-		fmt.Println("x != nil")
-	} else {
-		fmt.Println("x == nil")
-	}
-}
-
-func TestPointer(t *testing.T) {
-	var x *int = new(int)
-	y := *x
-	fmt.Println(x, &y)
 }
 
 func TestBitwise(t *testing.T) {
