@@ -37,7 +37,7 @@ func TestRandRates(t *testing.T) {
 			t.Error(err)
 			return
 		}
-		quantity[res]++
+		quantity[res.Key]++
 	}
 
 	fmt.Println(quantity)

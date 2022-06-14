@@ -46,9 +46,9 @@ func RandRarities(rateUnits []float64) (int, error) {
 	return lastID, nil
 }
 
-func RandRateUnits[T any](units []RateUnit[T]) (T, error) {
+func RandRateUnits[T any](units []RateUnit[T]) (resp RandResult[T], err error) {
 	if len(units) <= 0 {
-		return *new(T), errors.New("cannot rate pick the empty array")
+		return resp, errors.New("cannot rate pick the empty array")
 	}
 
 	var totalRate float64 = 0
@@ -58,11 +58,13 @@ func RandRateUnits[T any](units []RateUnit[T]) (T, error) {
 
 	randNum := RandFloat(0, totalRate)
 
-	var last T = units[0].Key
+	last := units[0].Key
+	id := 0
 	for k := range units {
 		var percent float64 = units[k].Rate
 		if percent > 0 {
 			last = units[k].Key
+			id = k
 			if randNum > percent {
 				randNum -= percent
 			} else {
@@ -71,7 +73,10 @@ func RandRateUnits[T any](units []RateUnit[T]) (T, error) {
 		}
 	}
 
-	return last, nil
+	return RandResult[T]{
+		Key: last,
+		ID:  id,
+	}, nil
 }
 
 // ---------------- Expect strategy
@@ -80,11 +85,16 @@ type ExpectUnit[T comparable] struct {
 	Expect float64 `json:"expect"`
 }
 
+type RandResult[T any] struct {
+	Key T   `json:"key"`
+	ID  int `json:"id"`
+}
+
 // options: first get first
 // options: random selected
 // options: update showed
 // options: balance showed
-func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]int) (res T, err error) {
+func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]int) (res RandResult[T], err error) {
 	if len(units) <= 0 {
 		return res, ErrEmpty
 	}
@@ -101,7 +111,10 @@ func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]int) (res T, e
 		if err != nil {
 			return res, err
 		}
-		return units[id].Key, nil
+		return RandResult[T]{
+			Key: units[id].Key,
+			ID:  id,
+		}, nil
 	}
 
 	actuals := make([]int, len(units))
@@ -125,5 +138,8 @@ func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]int) (res T, e
 		return res, err
 	}
 
-	return units[actuals[id]].Key, err
+	return RandResult[T]{
+		Key: units[actuals[id]].Key,
+		ID:  actuals[id],
+	}, err
 }

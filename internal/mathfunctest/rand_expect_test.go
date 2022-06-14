@@ -37,7 +37,7 @@ func TestExpect(t *testing.T) {
 			t.Error(err)
 			return
 		}
-		showed[res]++
+		showed[res.Key]++
 	}
 
 	fmt.Println(showed)
