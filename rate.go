@@ -94,37 +94,34 @@ type RandResult[T any] struct {
 // options: random selected
 // options: update showed
 // options: balance showed
-func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]int) (res RandResult[T], err error) {
+func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]uint) (res RandResult[T], err error) {
 	if len(units) <= 0 {
 		return res, ErrEmpty
 	}
 
-	totalShowed := 0
+	var totalShowed uint = 0
 	var totalExpect float64 = 0
 	for i := range units {
 		totalShowed += showed[units[i].Key]
 		totalExpect += units[i].Expect
 	}
 
-	if totalShowed == 0 {
-		id, err := Rand0ToInt(len(units))
-		if err != nil {
-			return res, err
-		}
-		return RandResult[T]{
-			Key: units[id].Key,
-			ID:  id,
-		}, nil
+	if totalExpect == 0 {
+		return res, errors.New("the total expect of all elements is 0")
 	}
 
 	actuals := make([]int, len(units))
 	minActual := float64(showed[units[0].Key])/float64(totalShowed)*totalExpect - units[0].Expect
 	count := 0
+
+	// if totalShowed == 0 then showed[v.Key] will be 0 too, 0/0 = 0
 	for k, v := range units {
 		actual := float64(showed[v.Key])/float64(totalShowed)*totalExpect - v.Expect
 		if actual > minActual {
 			continue
-		} else if actual < minActual {
+		}
+
+		if actual < minActual {
 			count = 0
 			minActual = actual
 		}

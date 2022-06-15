@@ -9,7 +9,7 @@ import (
 
 func TestExpect(t *testing.T) {
 	n := 10000
-	showed := map[string]int{}
+	showed := map[string]uint{}
 	for i := 0; i < n; i++ {
 		res, err := mafu.RandExpect([]mafu.ExpectUnit[string]{
 			{
