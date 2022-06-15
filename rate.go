@@ -110,11 +110,15 @@ func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]uint) (res Ran
 		return res, errors.New("the total expect of all elements is 0")
 	}
 
+	// if totalShowed == 0 then showed[v.Key] will be 0 too, 0/0 = NaN (not 0)
+	if totalShowed == 0 {
+		totalShowed = 1
+	}
+
 	actuals := make([]int, len(units))
 	minActual := float64(showed[units[0].Key])/float64(totalShowed)*totalExpect - units[0].Expect
 	count := 0
 
-	// if totalShowed == 0 then showed[v.Key] will be 0 too, 0/0 = 0
 	for k, v := range units {
 		actual := float64(showed[v.Key])/float64(totalShowed)*totalExpect - v.Expect
 		if actual > minActual {
