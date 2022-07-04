@@ -28,7 +28,7 @@ $ go get -u github.com/func25/mafu
 2. Import it in your code:
 
 ```go
-import "github.com/gin-gonic/gin"
+import "github.com/func25/mafu"
 ```
 
 ## Samples
@@ -58,8 +58,8 @@ const (
 )
 
 func main() {
-  mix := ColorBlack | ColorGreen | ColorBlue
-  fmt.Println(mix) // 13 = 1101
+	mix := ColorBlack | ColorGreen | ColorBlue
+	fmt.Println(mix) // 13 = 1101
 
 	mafu.FlagHas(mix, ColorGreen)       // true
 	mix = mafu.FlagOff(mix, ColorGreen) // 9 = 1001
@@ -88,7 +88,7 @@ func main() {
 
 	for i := 0; i < 10000; i++ {
 		res, _ := mafu.RandRateUnits([]mafu.RateUnit[string]{
-      {Key: "a", Rate: 0.1},
+			{Key: "a", Rate: 0.1},
 			{Key: "ab", Rate: 0.1},
 			{Key: "abc", Rate: 0.1},
 			{Key: "abcd", Rate: 0.1},
