@@ -17,6 +17,3 @@ func TestRand(t *testing.T) {
 	fmt.Println(mafu.Rand0ToInt(100)) // 24
 	fmt.Println(mafu.RandFloat(0.0, 100.0))
 }
-
-//49 <nil>
-// 56.45570425829678

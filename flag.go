@@ -12,8 +12,8 @@ func (b Flag) Off(other Flag) Flag {
 	return FlagOff(b, other)
 }
 
-func (b *Flag) Has(other Flag) bool {
-	return FlagHas(*b, other)
+func (b Flag) Has(other Flag) bool {
+	return FlagHas(b, other)
 }
 
 func FlagOn[T Integer](src T, other T) T {
