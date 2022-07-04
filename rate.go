@@ -18,12 +18,12 @@ type RateUnit[T any] struct {
 }
 
 //RandRarities return the index of selected element in rateUnits array
-func RandRarities(rateUnits []float64) (int, error) {
+func RandRarities[T Float](rateUnits []T) (int, error) {
 	if len(rateUnits) <= 0 {
 		return 0, errors.New("cannot rate pick the empty array")
 	}
 
-	var totalRate float64 = 0
+	var totalRate T = 0
 	for _, rate := range rateUnits {
 		totalRate += rate
 	}
@@ -32,7 +32,7 @@ func RandRarities(rateUnits []float64) (int, error) {
 
 	var lastID int = 0
 	for k, v := range rateUnits {
-		var percent float64 = v
+		var percent T = v
 		if percent > 0 {
 			lastID = k
 			if randNum > percent {
