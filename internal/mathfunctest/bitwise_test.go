@@ -7,8 +7,26 @@ import (
 	"github.com/func25/mafu"
 )
 
+type MultiColor int
+
+const (
+	ColorBlack MultiColor = 1 << iota
+	ColorRed
+	ColorGreen
+	ColorBlue
+)
+
 type abc struct {
-	a, b, c mafu.UIntBits
+	a, b, c mafu.Flag
+}
+
+func TestAc(t *testing.T) {
+	mix := ColorBlack | ColorGreen | ColorBlue
+	fmt.Println(mix)
+	fmt.Println(mafu.FlagHas(mix, ColorGreen))
+	fmt.Println(mafu.FlagOff(mix, ColorGreen))
+	fmt.Println(mafu.FlagHas(mix, ColorGreen))
+	fmt.Println(mix)
 }
 
 func TestBitwise(t *testing.T) {

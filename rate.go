@@ -94,20 +94,20 @@ type RandResult[T any] struct {
 // options: random selected
 // options: update showed
 // options: balance showed
-func RandExpect[T comparable](units []ExpectUnit[T], showed map[T]uint) (res RandResult[T], err error) {
+func RandExpect[T comparable, K Integer](units []ExpectUnit[T], showed map[T]K) (res RandResult[T], err error) {
 	if len(units) <= 0 {
 		return res, ErrEmpty
 	}
 
-	var totalShowed uint = 0
+	var totalShowed K = 0
 	var totalExpect float64 = 0
 	for i := range units {
 		totalShowed += showed[units[i].Key]
 		totalExpect += units[i].Expect
 	}
 
-	if totalExpect == 0 {
-		return res, errors.New("the total expect of all elements is 0")
+	if totalExpect <= 0 {
+		return res, errors.New("the total expect of all elements is equal or less than 0")
 	}
 
 	// if totalShowed == 0 then showed[v.Key] will be 0 too, 0/0 = NaN (not 0)

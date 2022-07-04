@@ -1,38 +1,23 @@
 package mafu
 
-import "math"
-
-func MinI(a int, b int) int {
-	if a < b {
-		return a
-	}
-
-	return b
-}
-
-func MinIE(first int, arr ...int) int {
+func Min[T Ordered](first T, arr ...T) T {
 	min := first
-	for _, v := range arr {
-		if v < min {
-			min = v
+	for i := range arr {
+		if arr[i] < min {
+			min = arr[i]
 		}
 	}
 
 	return min
 }
 
-func MinF(a float64, b float64) float64 {
-	return math.Min(a, b)
-}
-
-func MaxI(a int, b int) int {
-	if a > b {
-		return a
+func Max[T Ordered](first T, arr ...T) T {
+	max := first
+	for i := range arr {
+		if arr[i] > max {
+			max = arr[i]
+		}
 	}
 
-	return b
-}
-
-func MaxF(a float64, b float64) float64 {
-	return math.Max(a, b)
+	return max
 }

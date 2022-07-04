@@ -12,26 +12,11 @@ func TestRandRates(t *testing.T) {
 	n := 10000
 	for i := 0; i < n; i++ {
 		res, err := mafu.RandRateUnits([]mafu.RateUnit[string]{
-			{
-				Key:  "a",
-				Rate: 0.1,
-			},
-			{
-				Key:  "ab",
-				Rate: 0.1,
-			},
-			{
-				Key:  "abc",
-				Rate: 0.1,
-			},
-			{
-				Key:  "abcd",
-				Rate: 0.1,
-			},
-			{
-				Key:  "abcde",
-				Rate: 0.6,
-			},
+			{Key: "a", Rate: 0.1},
+			{Key: "ab", Rate: 0.1},
+			{Key: "abc", Rate: 0.1},
+			{Key: "abcd", Rate: 0.1},
+			{Key: "abcde", Rate: 0.6},
 		})
 		if err != nil {
 			t.Error(err)
