@@ -21,3 +21,15 @@ func Max[T Ordered](first T, arr ...T) T {
 
 	return max
 }
+
+func Cap[T Ordered](v T, min T, max T) T {
+	if v < min {
+		return min
+	}
+
+	if v > max {
+		return max
+	}
+
+	return v
+}
