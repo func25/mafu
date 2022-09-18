@@ -5,6 +5,10 @@ type Ordered interface {
 	Integer | Float | ~string
 }
 
+type Number interface {
+	Integer | Float
+}
+
 type Signed interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64
 }
