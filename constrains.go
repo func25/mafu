@@ -24,7 +24,3 @@ type Integer interface {
 type Float interface {
 	~float32 | ~float64
 }
-
-func Abc[T Signed](first T, arr ...T) T {
-	return first - arr[0]
-}
