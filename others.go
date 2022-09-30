@@ -1,6 +1,6 @@
 package mafu
 
-func Sign[T Number](v T) int {
+func Sign[T SignedNumber](v T) T {
 	zero := T(0)
 
 	switch true {
